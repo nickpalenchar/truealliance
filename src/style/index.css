@@ -35,4 +35,9 @@ body {
   -o-background-size: cover;
   background-size: cover; }
 
+.app-view {
+  display: block;
+  margin: 24px auto;
+  max-width: 760px; }
+
 /*# sourceMappingURL=index.css.map */
