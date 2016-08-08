@@ -11,6 +11,7 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <IndexRoute component={Register} />
       <Route path="step" component={Home}/>
+      {/*CreateRoom*/}
     </Route>
   </Router>,
   document.getElementById('root')
