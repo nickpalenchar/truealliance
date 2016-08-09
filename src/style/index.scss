@@ -1,10 +1,6 @@
-@mixin mobile() {
-  @media all and (max-width: 760px){
-    @content;
-  }
-}
+@import "mixins";
 
-* {
+.splash-header, .app-header {
   // main font theme
   h1 {
     font-size: 48px;
@@ -16,6 +12,10 @@
   h2, h3, h4 {
     font-weight: 100;
   }
+}
+
+h1, h2, h3, h4, h5, h6, div {
+  font-family: 'Titillium Web', sans-serif;
 }
 
 .splash-header {
@@ -45,7 +45,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   background: url('https://static.pexels.com/photos/1331/fog-italy-foggy-mist.jpg') no-repeat center center fixed;
--webkit-background-size: cover;
+  -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -55,4 +55,13 @@ body {
   display: block;
   margin: 24px auto;
   max-width: 760px;
+  @include mobile {
+    margin: 0 auto;
+  }
 }
+
+.g-sectionMargin {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+@import "../smartComponents/pages/register/register";

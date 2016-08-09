@@ -1,10 +1,13 @@
-* h1 {
+.splash-header h1, .app-header h1 {
   font-size: 48px; }
-* h1, * h2, * h3, * h4 {
+.splash-header h1, .splash-header h2, .splash-header h3, .splash-header h4, .app-header h1, .app-header h2, .app-header h3, .app-header h4 {
   font-family: 'Cormorant Unicase', Serif, serif;
   font-weight: 100; }
-* h2, * h3, * h4 {
+.splash-header h2, .splash-header h3, .splash-header h4, .app-header h2, .app-header h3, .app-header h4 {
   font-weight: 100; }
+
+h1, h2, h3, h4, h5, h6, div {
+  font-family: 'Titillium Web', sans-serif; }
 
 .splash-header {
   max-height: 19vh;
@@ -39,5 +42,15 @@ body {
   display: block;
   margin: 24px auto;
   max-width: 760px; }
+  @media all and (max-width: 760px) {
+    .app-view {
+      margin: 0 auto; } }
+
+.g-sectionMargin {
+  margin-top: 16px;
+  margin-bottom: 16px; }
+
+.p-register .container {
+  padding: 24px; }
 
 /*# sourceMappingURL=index.css.map */
