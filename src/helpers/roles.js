@@ -1,8 +1,8 @@
-var Role = function(alliance, character) {
+export var Role = function(alliance, character) {
   this.alliance = alliance;
   this.character = character;
 };
-var Player = function(name){
+export var Player = function(name){
   this.name = name;
   this.role = null;
   this.myInfo = null;
@@ -14,7 +14,7 @@ var Player = function(name){
     this.myInfo = roster.getInfo(this);
   };
 };
-var Info = function(message, people) {
+export var Info = function(message, people) {
   this.message = message;
   this.people = people || [];
 };
@@ -22,7 +22,7 @@ function listWithGrammar(arr){
   if(arr.length === 1) return arr[0];
   return arr.length === 2 ? arr.join(" & ") : arr.slice(0,-1).join(", ") + " & " + arr[arr.length-1];
 }
-var Roster = function(avalon){
+export var Roster = function(avalon){
   this.players = [];
   this.avalon = avalon;
 
@@ -99,6 +99,7 @@ var Roster = function(avalon){
     }
   };
 };
+
 var roster = new Roster(true);
 
 var me = new Player("Nick");
