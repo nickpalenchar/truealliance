@@ -21,6 +21,12 @@ class Register extends React.Component {
     });
   };
 
+  goToPage = page => {
+    this.setState({
+      page: page
+    })
+  };
+
 
   render() {
 
@@ -42,13 +48,15 @@ class Register extends React.Component {
               disabled={!this.state.name}
               primary={true}
               label="Next"
+              onClick={() => {console.log("doing the next state. . ."); this.goToPage("test")}}
             />
           </div>
         </Paper>
-      </div>
+      </div>,
+      test: <div>YOOOO YOU FOUND THE TEST!!!!!</div>
     };
 
-    return <div>{pages.name}</div>;
+    return <div>{pages[this.state.page]}</div>;
   }
 }
 
