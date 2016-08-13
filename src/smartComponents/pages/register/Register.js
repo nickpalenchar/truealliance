@@ -62,6 +62,13 @@ class Register extends React.Component {
           </div>
         </Paper>
       </div>,
+
+      rooms: <div className="p-register default-style">
+        <Paper className="container">
+          <h2>Find your clan.</h2>
+        </Paper>
+      </div>,
+
       test: <div>YOOOO YOU FOUND THE TEST!!!!!</div>
     };
 
