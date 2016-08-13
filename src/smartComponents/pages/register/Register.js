@@ -4,6 +4,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import * as controller from './register.controller';
+
 class Register extends React.Component {
 
   constructor(props){
@@ -27,6 +29,13 @@ class Register extends React.Component {
     })
   };
 
+  getAvailableRooms = () => {
+    controller.getAvailableRooms()
+      .then(rooms => {
+        console.log("get back from rooms in component ", rooms);
+      })
+  };
+
 
   render() {
 
@@ -48,7 +57,7 @@ class Register extends React.Component {
               disabled={!this.state.name}
               primary={true}
               label="Next"
-              onClick={() => {console.log("doing the next state. . ."); this.goToPage("test")}}
+              onClick={this.getAvailableRooms}
             />
           </div>
         </Paper>
