@@ -1,4 +1,5 @@
 // function to get the IP of the user. Will be used by the server to open up a socket that only others
+import $ from 'jquery';
 
 export function parseRoomNumber(noParse){
   return new Promise(function(resolve, reject) {
