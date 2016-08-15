@@ -64,5 +64,6 @@ body {
   margin-top: 16px;
   margin-bottom: 16px;
 }
-@import "../smartComponents/pages/register/register";
+@import "../smartComponents/register/register";
 @import "../dumbComponents/roomPanel/roomPanel";
+@import "../dumbComponents/errorText/errorText";

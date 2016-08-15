@@ -3,6 +3,10 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Loading from '../../dumbComponents/loading/Loading';
+import ErrorText from '../../dumbComponents/errorText/ErrorText';
+
+import { parseRoomNumber } from '../../helpers/localRoom';
 
 import * as controller from './register.controller';
 
@@ -14,14 +18,23 @@ class Register extends React.Component {
     this.state = {
       name: "",
       page: "name",
+      localPlayerNames: [],
+      error: null,
     }
+  }
+  componentWillMount() {
+    return this.getLocalPlayers()
   }
 
   handleInput = e => {
+    var newName = e.target.value.replace(/[^\w\d\s]/g, "").replace(/\s/g, "_").toUpperCase();
     this.setState({
-      name: e.target.value,
+      name: newName,
     });
+    if (this.state.localPlayerNames.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."});
+    else if (this.state.error) this.setState({error: null});
   };
+
 
   goToPage = page => {
     this.setState({
@@ -35,29 +48,46 @@ class Register extends React.Component {
         console.log("get back from rooms in component ", rooms);
       })
   };
+  getLocalPlayers = () => {
+    return controller.getLocalUsers()
+      .then(players => this.setState({localPlayerNames: players.map(function (player) {
+        return player.name;
+      })}));
+  };
+  handleRegister = () => {
+    return parseRoomNumber()
+      .then(res => controller.registerPlayer(this.state.name, res.id))
+      .then(player => {
+        localStorage.setItem(player.id, JSON.stringify(player));
+        console.log("THE PLAYER ", player);
+      })
+  };
 
 
   render() {
 
     let pages = {
+      loading: <Loading/>,
       name: <div className="p-register default-style">
         <Paper className="container">
           <h2>What name are you called?</h2>
           <div className="g-sectionMargin">
             <TextField
-              floatingLabelText={"A name they will know you by."}
+              floatingLabelText={"A name they will know you by:"}
               floatingLabelFixed={true}
-              hintText={"Sir Lancelot"}
+              maxLength={18}
+              hintText={"YOUR NAME HERE"}
               value={this.state.name}
               onChange={this.handleInput}
             />
+            <ErrorText errorMessage={this.state.error}/>
           </div>
           <div className="g-sectionMargin">
             <RaisedButton
-              disabled={!this.state.name}
+              disabled={!this.state.name || !!this.state.error}
               primary={true}
               label="Next"
-              onClick={this.getAvailableRooms}
+              onClick={this.handleRegister}
             />
           </div>
         </Paper>

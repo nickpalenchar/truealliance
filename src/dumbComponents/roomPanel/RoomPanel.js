@@ -11,7 +11,7 @@ class PlayerPanel extends React.Component {
 }
 
 
-export default class RoomPanel extends React.Component {
+class RoomPanel extends React.Component {
 
   render() {
     return <div className="dc-roomPanel">
@@ -19,10 +19,12 @@ export default class RoomPanel extends React.Component {
         <div className="title">{this.props.title}</div>
         <div className="players number">{this.props.players.length} / {this.props.maxPlayers || "10"}</div>
         <div className="players label">players</div>
-      <div className="players">
-        {this.props.players.map(player => <PlayerPanel name={player.name}/>)}
+        <div className="players">
+          {this.props.players.map(player => <PlayerPanel name={player.name}/>)}
+        </div>
       </div>
     </div>
   }
-
 }
+
+export default RoomPanel;
