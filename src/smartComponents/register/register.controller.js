@@ -1,5 +1,5 @@
-import { parseRoomNumber } from '../../../helpers/localRoom';
-import { BACKEND_URL } from '../../../env/development';
+import { parseRoomNumber } from '../../helpers/localRoom';
+import { BACKEND_URL } from '../../env/development';
 import $ from 'jquery';
 
 export function getAvailableRooms() {
