@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Loading extends react.Component {
+class Loading extends React.Component {
 
   render() {
     return <div className="dc-loading">
@@ -11,4 +11,4 @@ class Loading extends react.Component {
 
 }
 
-export default Loading
+export default Loading;
