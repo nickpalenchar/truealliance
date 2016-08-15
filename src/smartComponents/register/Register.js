@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Loading from '../../dumbComponents/loading/Loading';
+import ErrorText from '../../dumbComponents/errorText/ErrorText';
 
 import { parseRoomNumber } from '../../helpers/localRoom';
 
@@ -69,7 +70,7 @@ class Register extends React.Component {
       loading: <Loading/>,
       name: <div className="p-register default-style">
         <Paper className="container">
-          <h2>What name are you called? {this.state.error}</h2>
+          <h2>What name are you called?</h2>
           <div className="g-sectionMargin">
             <TextField
               floatingLabelText={"A name they will know you by:"}
@@ -79,6 +80,7 @@ class Register extends React.Component {
               value={this.state.name}
               onChange={this.handleInput}
             />
+            <ErrorText errorMessage={this.state.error}/>
           </div>
           <div className="g-sectionMargin">
             <RaisedButton
