@@ -53,4 +53,8 @@ body {
 .p-register .container {
   padding: 24px; }
 
+.dc-errorText {
+  font-size: 10px;
+  color: #F44336; }
+
 /*# sourceMappingURL=index.css.map */

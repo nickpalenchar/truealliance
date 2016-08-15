@@ -14,3 +14,19 @@ export function getAvailableRooms() {
     })
     .catch(function(err) {throw err});
 }
+
+export function getLocalUsers() {
+  return parseRoomNumber()
+    .then(function (res) {
+      return $.get(BACKEND_URL + '/api/players/local/' + res.id)
+    })
+    .then(function(players){
+      console.log("players: ", players);
+      return players;
+    })
+}
+
+export function registerPlayer(name, id) {
+  return $.post(BACKEND_URL + '/api/players/', {name: name, id: id})
+    .then(function(res) { return res});
+}
