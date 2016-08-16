@@ -42,12 +42,8 @@ class Register extends React.Component {
     })
   };
 
-  getAvailableRooms = () => {
-    controller.getAvailableRooms()
-      .then(rooms => {
-        console.log("get back from rooms in component ", rooms);
-      })
-  };
+  getAvailableRooms = () => controller.getAvailableRooms();
+
   getLocalPlayers = () => {
     return controller.getLocalUsers()
       .then(players => this.setState({localPlayerNames: players.map(function (player) {
@@ -55,11 +51,19 @@ class Register extends React.Component {
       })}));
   };
   handleRegister = () => {
+    let thePlayer;
     return parseRoomNumber()
       .then(res => controller.registerPlayer(this.state.name, res.id))
       .then(player => {
         localStorage.setItem(player.id, JSON.stringify(player));
+        thePlayer = player;
         console.log("THE PLAYER ", player);
+        return this.getAvailableRooms()
+      })
+      .then(rooms => {
+        console.log("get back from rooms in component ", rooms);
+        if(rooms.length === 1 && !rooms[0].players && !rooms[0].active) this.joinRoom(thePlayer._id, rooms[0]._id, true);
+        // TODO room selection if a room exists.
       })
   };
 
