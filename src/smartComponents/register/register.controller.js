@@ -30,3 +30,7 @@ export function registerPlayer(name, id) {
   return $.post(BACKEND_URL + '/api/players/', {name: name, id: id})
     .then(function(res) { return res});
 }
+
+export function joinRoom(playerId, roomId, andGo) {
+  return $.post(BACKEND_URL + '/api/rooms/player/' + playerId, )
+}
