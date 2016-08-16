@@ -32,5 +32,10 @@ export function registerPlayer(name, id) {
 }
 
 export function joinRoom(playerId, roomId, andGo) {
-  return $.post(BACKEND_URL + '/api/rooms/player/' + playerId, )
+  return $.post(BACKEND_URL + '/api/rooms/player/' + playerId, { roomId: roomId })
+    .then(function(updatedRoom){
+      console.log("[register.controller:joinRoom] new room ", updatedRoom);
+      window._activeRoom = updatedRoom;
+      if(andGo) window.location.href = "/gameRoom/" + updatedRoom._id;
+    })
 }
