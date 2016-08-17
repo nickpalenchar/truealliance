@@ -62,7 +62,7 @@ class Register extends React.Component {
       })
       .then(rooms => {
         console.log("get back from rooms in component ", rooms);
-        if(rooms.length === 1 && !rooms[0].players && !rooms[0].active) this.joinRoom(thePlayer._id, rooms[0]._id, true);
+        if(!Array.isArray(rooms)) controller.joinRoom(thePlayer._id, rooms._id, true);
         // TODO room selection if a room exists.
       })
   };

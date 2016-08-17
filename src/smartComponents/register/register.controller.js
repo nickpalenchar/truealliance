@@ -1,5 +1,6 @@
 import { parseRoomNumber } from '../../helpers/localRoom';
-import { BACKEND_URL } from '../../env/development';
+import env from '../../env';
+var BACKEND_URL = env.BACKEND_URL;
 import $ from 'jquery';
 
 export function getAvailableRooms() {
@@ -36,6 +37,6 @@ export function joinRoom(playerId, roomId, andGo) {
     .then(function(updatedRoom){
       console.log("[register.controller:joinRoom] new room ", updatedRoom);
       window._activeRoom = updatedRoom;
-      if(andGo) window.location.href = "/gameRoom/" + updatedRoom._id;
+      if(andGo) window.location.href = "/#/gameRoom/" + updatedRoom._id;
     })
 }
