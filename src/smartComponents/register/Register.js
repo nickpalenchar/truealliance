@@ -23,7 +23,7 @@ class Register extends React.Component {
     }
   }
   componentWillMount() {
-    return this.getLocalPlayers()
+    return this.getLocalPlayers();
   }
 
   handleInput = e => {
