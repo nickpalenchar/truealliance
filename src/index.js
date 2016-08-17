@@ -6,6 +6,7 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import Register from './smartComponents/register/Register';
 import Home from './smartComponents/Home';
 import GameRoom from './smartComponents/gameRoom/GameRoom';
+import RoomSelection from './smartComponents/roomSelection/RoomSelection';
 
 ReactDOM.render(
   <Router history={hashHistory}>
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Route path="step" component={Home}/>
       {/*CreateRoom*/}
       <Route path="/gameRoom/:roomId" component={GameRoom}/>
+      <Route path="/browse" component={RoomSelection}/>
     </Route>
   </Router>,
   document.getElementById('root')
