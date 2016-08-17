@@ -7,6 +7,7 @@ import Loading from '../../dumbComponents/loading/Loading';
 import ErrorText from '../../dumbComponents/errorText/ErrorText';
 
 import { parseRoomNumber } from '../../helpers/localRoom';
+import { joinRoom } from '../../helpers/joinRoom';
 
 import * as controller from './register.controller';
 
@@ -62,7 +63,11 @@ class Register extends React.Component {
       })
       .then(rooms => {
         console.log("get back from rooms in component ", rooms);
-        if(!Array.isArray(rooms)) controller.joinRoom(thePlayer._id, rooms._id, true);
+        if(!Array.isArray(rooms)) joinRoom(thePlayer._id, rooms._id, true);
+        else {
+          window._localRooms = rooms;
+          window.location.href = "/#/browse"
+        }
         // TODO room selection if a room exists.
       })
   };
