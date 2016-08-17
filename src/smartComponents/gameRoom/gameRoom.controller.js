@@ -1,4 +1,5 @@
-import $ from 'jquery'
+import $ from 'jquery';
+import _ from 'lodash';
 
 import env from '../../env';
 var BACKEND_URL = env.BACKEND_URL;
