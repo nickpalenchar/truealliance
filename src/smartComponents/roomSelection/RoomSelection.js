@@ -21,12 +21,13 @@ class RoomSelection extends React.Component {
   componentWillMount() {
     if(window._localRooms) {
       this.setState({rooms: window._localRooms});
-    delete window._localRooms;
+      delete window._localRooms;
     }
     else {
       console.log("[roomSelection] getting rooms" );
       parseRoomNumber()
         .then(res => {
+          console.log("the res ", res);
           this.setState({me: JSON.parse(window.localStorage.getItem(res.id))});
           return controller.getRoomsByLocalId(res.id)
         })

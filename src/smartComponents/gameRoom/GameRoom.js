@@ -6,6 +6,9 @@ import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {blue300, indigo900, blueGrey200} from 'material-ui/styles/colors';
+import playerChip from './gameRoom.inlineStyles';
+
+import LeaveRoom from './gameRoom.components';
 
 import * as controller from './gameRoom.controller';
 
@@ -30,7 +33,6 @@ class GameRoom extends React.Component {
       /// long polling from param roomId
       return controller.getRoomDocumentById(this.props.params.roomId)
         .then(function(room){
-          console.log("ROOOM? ", room);
           if(!room) return self.setState({noRoom: true})
           return self.setState({room: room});
         })
@@ -43,12 +45,19 @@ class GameRoom extends React.Component {
 
   render() {
     var roomView = (<Card>
-      <CardTitle title={this.state.room.name} subtitle={"Game Master: " + (this.state.room.admin||{}).name}/>
+      <CardTitle title={<div>
+          <div className="titleLeft">
+            {this.state.room.name}</div>
+          <div className="titleRight">
+            <div><LeaveRoom roomId={this.state.room.id} roomDocId={this.state.room._id}/></div>
+          </div>
+        </div>}
+                 subtitle={"Game Master: " + (this.state.room.admin||{name: "nobody"}).name}/>
       <Subheader>Roster {this.state.room.players && "("+this.state.room.players.length+")"}</Subheader>
       <div className="roster">{this.state.room.players &&
         this.state.room.players.map((player, i) => {
           var imAdmin = player._id === this.state.room.admin._id;
-          if(imAdmin) return <Chip key={i} backgroundColor={blue300}><Avatar size={32} backgroundColor={indigo900} color={blue300}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
+          if(imAdmin) return <Chip className="playerChip" style={{margin: "0 8px"}} key={i} backgroundColor={blue300}><Avatar size={32} backgroundColor={indigo900} color={blue300}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
           return <Chip key={i}><Avatar size={32} backgroundColor={blueGrey200}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
         })}
       </div>

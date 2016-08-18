@@ -54,7 +54,22 @@ body {
   padding: 24px; }
 
 .sc-gameRoom .roster {
-  padding: 16px; }
+  padding: 16px;
+  display: -webkit-flex;
+  display: flex; }
+.sc-gameRoom .titleLeft, .sc-gameRoom .titleRight {
+  display: inline-block;
+  margin-left: 0;
+  margin-right: 0; }
+.sc-gameRoom .titleLeft {
+  width: 50%; }
+.sc-gameRoom .titleRight {
+  width: 50%; }
+  .sc-gameRoom .titleRight > div {
+    float: right; }
+.sc-gameRoom .playerChip {
+  display: inline-block !important;
+  margin: 0 8px; }
 
 .dc-errorText {
   font-size: 11px;

@@ -2,5 +2,27 @@
 .sc-gameRoom {
   .roster {
     padding: 16px;
+    display: -webkit-flex;
+    display: flex;
+  }
+  .titleLeft, .titleRight {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .titleLeft {
+    width: 50%;
+  }
+  .titleRight {
+    width: 50%;
+    >div {
+      //padding-top: 4px;
+      float: right;
+    }
+  }
+
+  .playerChip {
+    display: inline-block !important;
+    margin: 0 8px;
   }
 }
