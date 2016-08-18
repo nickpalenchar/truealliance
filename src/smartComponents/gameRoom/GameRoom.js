@@ -7,6 +7,8 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {blue300, indigo900, blueGrey200} from 'material-ui/styles/colors';
 import playerChip from './gameRoom.inlineStyles';
+import env from '../../env';
+var BACKEND_URL = env.BACKEND_URL;
 
 import LeaveRoom from './gameRoom.components';
 
@@ -22,6 +24,7 @@ class GameRoom extends React.Component {
   }
 
   componentWillMount() {
+
     var self = this;
     if(window._activeRoom) {
       console.log("getting active room locally. its ", window._activeRoom);
@@ -41,6 +44,14 @@ class GameRoom extends React.Component {
           return self.setState({errorMessage: err.statusText});
         })
     }
+  }
+  componentDidMount() {
+    //// SOCKET ////
+    window.socket = io(BACKEND_URL);
+    console.log('socketttttttt');
+    console.dir(socket);
+    window.socket.on("test", function(){console.info("test recieved", arguments)})
+    setTimeout(()=>window.socket.emit("test"),3000);
   }
 
   render() {
