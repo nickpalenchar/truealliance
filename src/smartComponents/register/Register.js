@@ -24,7 +24,13 @@ class Register extends React.Component {
     }
   }
   componentWillMount() {
-    return this.getLocalPlayers();
+    return parseRoomNumber()
+      .then(res => {
+        if(localStorage.getItem(res.id)){
+          return window.location.href = "/#/browse"
+        }
+        return this.getLocalPlayers();
+      })
   }
 
   handleInput = e => {

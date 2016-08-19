@@ -25,6 +25,14 @@ class GameRoom extends React.Component {
 
   componentWillMount() {
 
+    //// set socket and listenersss.
+    console.log("STATE IN DID MOUND", this.state);
+    if(!window.socket) window.socket = io(BACKEND_URL); var socket = window.socket;
+    socket.on("test", (arg)=>{
+      console.info("test recieved", arg);
+    });
+
+    /// get the right room
     var self = this;
     if(window._activeRoom) {
       console.log("getting active room locally. its ", window._activeRoom);
@@ -37,7 +45,8 @@ class GameRoom extends React.Component {
       return controller.getRoomDocumentById(this.props.params.roomId)
         .then(function(room){
           if(!room) return self.setState({noRoom: true})
-          return self.setState({room: room});
+          self.setState({room: room});
+          return socket.emit('join-room', room._id);
         })
         .catch(function(err){
           console.log('the error ', err);
@@ -45,16 +54,17 @@ class GameRoom extends React.Component {
         })
     }
   }
-  componentDidMount() {
-    //// SOCKET ////
-    window.socket = io(BACKEND_URL);
-    console.log('socketttttttt');
-    console.dir(socket);
-    window.socket.on("test", function(){console.info("test recieved", arguments)})
-    setTimeout(()=>window.socket.emit("test"),3000);
-  }
 
+  componentWillUpdate() {
+    console.warn("UPDATEEE")
+    var socket = window.socket;
+    console.log("this?? ", this.state);
+    console.log("setting room ", this.state.room._id);
+    socket.emit('join-room', this.state.room._id);
+  }
   render() {
+    //// SOCKET ////
+
     var roomView = (<Card>
       <CardTitle title={<div>
           <div className="titleLeft">
