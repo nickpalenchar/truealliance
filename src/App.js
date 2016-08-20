@@ -8,7 +8,10 @@ injectTapEventPlugin();
 
 
 class App extends Component {
+
   render() {
+
+
     return (
       <MuiThemeProvider>
         <div className="App">

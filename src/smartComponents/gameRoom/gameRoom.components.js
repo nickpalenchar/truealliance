@@ -14,7 +14,11 @@ class LeaveRoom extends React.Component {
   render() {
     return <FlatButton
       label="Leave"
-      onClick={() => leaveRoom(this.props.roomId, this.props.roomDocId)}
+      onClick={() => {
+        console.log("INSIDE THE ROOM", window.socket)
+        window.socket.emit('remove-player', this.props.roomDocId, this.props.playerId);
+        leaveRoom(this.props.roomId, this.props.roomDocId);
+      }}
       backgroundColor={deepOrange300}
     />
   }

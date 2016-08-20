@@ -14,7 +14,7 @@ class RoomSelection extends React.Component {
     super(props);
     this.state = {
       rooms: [],
-      me: null
+      me: JSON.parse(localStorage.getItem(sessionStorage.getItem("activeId")))
     }
   }
 

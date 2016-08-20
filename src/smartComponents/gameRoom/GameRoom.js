@@ -12,6 +12,9 @@ var BACKEND_URL = env.BACKEND_URL;
 
 import LeaveRoom from './gameRoom.components';
 
+import { requireMatchingId2 } from '../../thunks/requireMatchingId';
+import { getMe } from '../../helpers/getMe';
+
 import * as controller from './gameRoom.controller';
 
 ///// /game/:id
@@ -24,12 +27,23 @@ class GameRoom extends React.Component {
   }
 
   componentWillMount() {
-
     //// set socket and listenersss.
-    console.log("STATE IN DID MOUND", this.state);
     if(!window.socket) window.socket = io(BACKEND_URL); var socket = window.socket;
+    socket.emit('join-room', this.props.params.roomId);
     socket.on("test", (arg)=>{
       console.info("test recieved", arg);
+    });
+    socket.on("update-players", newPlayers => {
+      this.setState({
+        room: Object.assign({}, this.state.room, {players: newPlayers})
+      })
+    });
+    socket.on("remove-player", idToRemove => {
+      console.log("triggened", idToRemove, this.state.room);
+      var newRoomState = this.state.room;
+      console.log(newRoomState);
+      newRoomState.players = newRoomState.players.filter(player => player._id !== idToRemove);
+      this.setState({room: newRoomState});
     });
 
     /// get the right room
@@ -38,15 +52,21 @@ class GameRoom extends React.Component {
       console.log("getting active room locally. its ", window._activeRoom);
       this.setState({room: window._activeRoom});
       window.localStorage.setItem("activeRoom", window._activeRoom._id);
+      socket.emit('update-players', this.props.params.roomId, window._activeRoom.players);
       delete window._activeRoom;
     }
     else {
       /// long polling from param roomId
       return controller.getRoomDocumentById(this.props.params.roomId)
-        .then(function(room){
-          if(!room) return self.setState({noRoom: true})
-          self.setState({room: room});
-          return socket.emit('join-room', room._id);
+        .then(room => {
+          if(!room) return self.setState({noRoom: true}); // for error msg.
+
+          if(room.players.length > 1) {
+            console.log("updating players with", room.players);
+            socket.emit('update-players', this.props.params.roomId, room.players);
+          }
+
+          return self.setState({room: room});
         })
         .catch(function(err){
           console.log('the error ', err);
@@ -56,11 +76,10 @@ class GameRoom extends React.Component {
   }
 
   componentWillUpdate() {
-    console.warn("UPDATEEE")
+
     var socket = window.socket;
     console.log("this?? ", this.state);
     console.log("setting room ", this.state.room._id);
-    socket.emit('join-room', this.state.room._id);
   }
   render() {
     //// SOCKET ////
@@ -70,7 +89,7 @@ class GameRoom extends React.Component {
           <div className="titleLeft">
             {this.state.room.name}</div>
           <div className="titleRight">
-            <div><LeaveRoom roomId={this.state.room.id} roomDocId={this.state.room._id}/></div>
+            <div><LeaveRoom roomId={this.state.room.id} roomDocId={this.state.room._id} playerId={getMe("_id")} /></div>
           </div>
         </div>}
                  subtitle={"Game Master: " + (this.state.room.admin||{name: "nobody"}).name}/>
@@ -109,7 +128,7 @@ class GameRoom extends React.Component {
     return <div className="sc-gameRoom">
       {this.state.errorMessage && errorView}
       {this.state.noRoom && noRoom}
-      {!this.state.errorMessage && !this.state.noRoom && <div>{this.state.room ? roomView : loadingView}</div>}
+      {!this.state.errorMessage && !this.state.noRoom && <div>{ this.state.room && requireMatchingId2(this.state.room.id, this.state.room._id) ? roomView : loadingView}</div>}
     </div>
   }
 }
