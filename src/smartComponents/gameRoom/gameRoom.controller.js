@@ -18,6 +18,7 @@ export function leaveRoom(roomId, roomDocId) {
   console.log("got ", me, " from " + roomId );
   $.post(BACKEND_URL + '/api/rooms/player/' + me._id + '/delete', { roomId: roomDocId })
     .then(function (res) {
+      localStorage.removeItem("activeRoom");
       console.log("I think it worked");
       window.location.href = "/#/browse";
     })
