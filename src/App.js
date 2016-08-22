@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Navbar from './smartComponents/navBar/Navbar';
 
 injectTapEventPlugin();
 
@@ -16,9 +17,9 @@ class App extends Component {
       <MuiThemeProvider>
         <div className="App">
           <div className="splash-header App-header">
-            {/*<img src={logo} className="App-logo" alt="logo" />*/}
             <h1>discover your true alliance</h1>
           </div>
+          <Navbar/>
           <div className="app-view">
             {this.props.children}
           </div>

@@ -17,6 +17,8 @@ export function requireRegistration(Component) {
     direct = () => {
       var player = JSON.parse(localStorage.getItem(sessionStorage.getItem("activeId")));
       if(player) return this.setState({status: "READY"});
+      /// no player found. Start at registration
+      localStorage.removeItem("activeRoom");
       window.location.href = "/";
     };
 

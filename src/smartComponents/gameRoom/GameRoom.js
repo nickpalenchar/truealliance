@@ -7,6 +7,9 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {blue300, indigo900, blueGrey200} from 'material-ui/styles/colors';
 import playerChip from './gameRoom.inlineStyles';
+import Settings from 'material-ui/svg-icons/action/settings';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 import env from '../../env';
 var BACKEND_URL = env.BACKEND_URL;
 
@@ -45,11 +48,14 @@ class GameRoom extends React.Component {
       newRoomState.players = newRoomState.players.filter(player => player._id !== idToRemove);
       this.setState({room: newRoomState});
     });
+    socket.on("start-game", info => {
+      console.log("start-game info ", info );
+      controller.startGame(info, this.state.room.players.length);
+    })
 
     /// get the right room
     var self = this;
     if(window._activeRoom) {
-      console.log("getting active room locally. its ", window._activeRoom);
       this.setState({room: window._activeRoom});
       window.localStorage.setItem("activeRoom", window._activeRoom._id);
       socket.emit('update-players', this.props.params.roomId, window._activeRoom.players);
@@ -81,19 +87,22 @@ class GameRoom extends React.Component {
     console.log("this?? ", this.state);
     console.log("setting room ", this.state.room._id);
   }
+  isAdmin = () => getMe("_id") === (this.state.room.admin||{})._id;
+
   render() {
     //// SOCKET ////
+    var room = this.state.room || {};
 
     var roomView = (<Card>
       <CardTitle title={<div>
           <div className="titleLeft">
-            {this.state.room.name}</div>
+            {this.state.room.name} {this.isAdmin() && <IconButton style={{padding: "0", height: "24px"}} onClick={()=>window.location.href = "/#/editRoom/"+this.props.params.roomId}><Settings/></IconButton>}</div>
           <div className="titleRight">
             <div><LeaveRoom roomId={this.state.room.id} roomDocId={this.state.room._id} playerId={getMe("_id")} /></div>
           </div>
         </div>}
                  subtitle={"Game Master: " + (this.state.room.admin||{name: "nobody"}).name}/>
-      <Subheader>Roster {this.state.room.players && "("+this.state.room.players.length+")"}</Subheader>
+      <Subheader>Roster {this.state.room.players && "("+room.players.length+"/" + (room.options||{}).maxPlayers+")"}</Subheader>
       <div className="roster">{this.state.room.players &&
         this.state.room.players.map((player, i) => {
           var imAdmin = player._id === this.state.room.admin._id;
@@ -101,6 +110,14 @@ class GameRoom extends React.Component {
           return <Chip key={i}><Avatar size={32} backgroundColor={blueGrey200}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
         })}
       </div>
+      <br/>
+      <CardActions>
+        {this.isAdmin() && <RaisedButton
+          label="Play"
+          primary={true}
+          onClick={()=>socket.emit('start-game', this.props.params.roomId, room.options, room.players)}
+        />}
+      </CardActions>
     </Card>);
 
     var loadingView = <Card>
@@ -120,7 +137,7 @@ class GameRoom extends React.Component {
       <CardText>This room no longer exists. Try creating a new room</CardText>
       <CardActions>
         <RaisedButton primary={true} label="Create Room"/>
-        <FlatButton label={"Join Another"}/>
+        <FlatButton label={"Join Another"} onClick={()=>window.location.href="/#/browse"}/>
         <FlatButton label={"Start Over"}/>
       </CardActions>
     </Card>;

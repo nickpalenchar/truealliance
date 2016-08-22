@@ -1,3 +1,4 @@
+@import "../../style/variables";
 
 .sc-gameRoom {
   .roster {
@@ -24,5 +25,50 @@
   .playerChip {
     display: inline-block !important;
     margin: 0 8px;
+  }
+}
+
+//// game scrim exists outside of its container
+
+.gameScrim {
+  position: fixed;
+  width: 100vw;
+  height: 0;
+  background: $c-header;
+  will-change: height;
+  z-index: 100;
+
+  -webkit-transition: height 1000ms ease;
+  -moz-transition: height 1000ms ease;
+  -ms-transition: height 1000ms ease;
+  -o-transition: height 1000ms ease;
+  transition: height 1000ms ease;
+
+  &.opened {
+    height: 100vh;
+  }
+
+  div.message {
+    font-family: 'Cormorant Unicase', Serif, serif !important;
+    font-size: 28px;
+    color: white;
+    text-align: center;
+    :nth-child(2) {
+      font-family: 'Titillium Web', sans-serif;
+    }
+  }
+  .messageItem {
+    margin: 38px 0;
+    ///// transition //////
+    opacity: 0;
+    will-change: opacity;
+    -webkit-transition: opacity 2200ms;
+    -moz-transition: opacity 2200ms;
+    -ms-transition: opacity 2200ms;
+    -o-transition: opacity 2200ms;
+    transition: opacity 2200ms;
+    &.opened {
+      opacity: 1;
+    }
   }
 }
