@@ -10,7 +10,6 @@ export function getAvailableRooms() {
       return $.get(BACKEND_URL + '/api/rooms/find/' + res.id);
     })
     .then(function (more) {
-      console.log("will this work this way??", more);
       return more;
     })
     .catch(function(err) {throw err});

@@ -14,8 +14,8 @@
   }
 }
 
-h1, h2, h3, h4, h5, h6, div {
-  font-family: 'Titillium Web', sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Titillium Web', sans-serif;
 }
 
 .splash-header {
@@ -64,7 +64,14 @@ body {
   margin-top: 16px;
   margin-bottom: 16px;
 }
+.clearfix:after {
+  content:"";
+  display:block;
+  clear:both;
+}
 @import "../smartComponents/register/register";
 @import "../smartComponents/gameRoom/gameRoom";
+@import "../smartComponents/createRoom/createRoom";
+@import "../smartComponents/navBar/navbar";
 @import "../dumbComponents/roomPanel/roomPanel";
 @import "../dumbComponents/errorText/errorText";

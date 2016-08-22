@@ -7,6 +7,8 @@ import Register from './smartComponents/register/Register';
 import Home from './smartComponents/Home';
 import GameRoom from './smartComponents/gameRoom/GameRoom';
 import RoomSelection from './smartComponents/roomSelection/RoomSelection';
+import CreateRoom from './smartComponents/createRoom/CreateRoom';
+
 import { parseRoomNumber } from './helpers/localRoom'
 import { requireRegistration } from './thunks/requireRegistration';
 
@@ -19,7 +21,8 @@ function startApp() {
         <IndexRoute component={Register} />
         <Route path="step" component={Home}/>
         {/*CreateRoom*/}
-        <Route path="/gameRoom/:roomId" component={GameRoom}/>
+        <Route path="/gameRoom/:roomId" component={requireRegistration(GameRoom)}/>
+        <Route path="/editRoom/:roomId" component={requireRegistration(CreateRoom)}/>
         <Route path="/browse" component={requireRegistration(RoomSelection)}/>
       </Route>
     </Router>,
@@ -39,8 +42,3 @@ parseRoomNumber()
     }
     startApp();
   });
-
-// parseRoomNumber()
-//   .then(() => )
-
-

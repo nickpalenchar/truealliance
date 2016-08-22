@@ -1,0 +1,12 @@
+.sc-navbar {
+  width: 100%;
+  background: #555;
+  height: 48px;
+  .container {
+    padding: 6px 48px 0 0;
+    display: -webkit-flex;
+    display: flex;
+    align-content: center;
+    justify-content: flex-end;
+  }
+}

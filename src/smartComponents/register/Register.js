@@ -68,8 +68,7 @@ class Register extends React.Component {
         return this.getAvailableRooms()
       })
       .then(rooms => {
-        console.log("get back from rooms in component ", rooms);
-        if(!Array.isArray(rooms)) joinRoom(thePlayer._id, rooms._id, true);
+        if(!Array.isArray(rooms)) joinRoom(thePlayer._id, rooms._id, false, true);
         else {
           window._localRooms = rooms;
           window.location.href = "/#/browse"

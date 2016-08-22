@@ -6,7 +6,7 @@
 .splash-header h2, .splash-header h3, .splash-header h4, .app-header h2, .app-header h3, .app-header h4 {
   font-weight: 100; }
 
-h1, h2, h3, h4, h5, h6, div {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Titillium Web', sans-serif; }
 
 .splash-header {
@@ -50,6 +50,11 @@ body {
   margin-top: 16px;
   margin-bottom: 16px; }
 
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both; }
+
 .p-register .container {
   padding: 24px; }
 
@@ -70,6 +75,70 @@ body {
 .sc-gameRoom .playerChip {
   display: inline-block !important;
   margin: 0 8px; }
+
+.gameScrim {
+  position: fixed;
+  width: 100vw;
+  height: 0;
+  background: #222;
+  will-change: height;
+  z-index: 100;
+  -webkit-transition: height 1000ms ease;
+  -moz-transition: height 1000ms ease;
+  -ms-transition: height 1000ms ease;
+  -o-transition: height 1000ms ease;
+  transition: height 1000ms ease; }
+  .gameScrim.opened {
+    height: 100vh; }
+  .gameScrim div.message {
+    font-family: 'Cormorant Unicase', Serif, serif !important;
+    font-size: 28px;
+    color: white;
+    text-align: center; }
+    .gameScrim div.message :nth-child(2) {
+      font-family: 'Titillium Web', sans-serif; }
+  .gameScrim .messageItem {
+    margin: 38px 0;
+    opacity: 0;
+    will-change: opacity;
+    -webkit-transition: opacity 2200ms;
+    -moz-transition: opacity 2200ms;
+    -ms-transition: opacity 2200ms;
+    -o-transition: opacity 2200ms;
+    transition: opacity 2200ms; }
+    .gameScrim .messageItem.opened {
+      opacity: 1; }
+
+.sc-createRoom .rightColumn, .sc-createRoom .leftColumn {
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  display: block; }
+  @media all and (max-width: 760px) {
+    .sc-createRoom .rightColumn, .sc-createRoom .leftColumn {
+      width: 100%;
+      display: block;
+      height: auto; } }
+  .sc-createRoom .rightColumn > div, .sc-createRoom .leftColumn > div {
+    margin: 8px 0; }
+.sc-createRoom .leftColumn {
+  float: left; }
+  @media all and (max-width: 760px) {
+    .sc-createRoom .leftColumn {
+      margin-bottom: 8px; } }
+.sc-createRoom .rightColumn {
+  float: right; }
+
+.sc-navbar {
+  width: 100%;
+  background: #555;
+  height: 48px; }
+  .sc-navbar .container {
+    padding: 6px 48px 0 0;
+    display: -webkit-flex;
+    display: flex;
+    align-content: center;
+    justify-content: flex-end; }
 
 .dc-errorText {
   font-size: 11px;

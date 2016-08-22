@@ -1,0 +1,28 @@
+@import "../../style/mixins";
+
+.sc-createRoom {
+  .rightColumn, .leftColumn {
+    width: 50%;
+    height: 100%;
+    margin: 0;
+    display: block;
+    @include mobile {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+    >div{
+      margin: 8px 0;
+    }
+  }
+  .leftColumn {
+    float: left;
+    @include mobile {
+      margin-bottom: 8px;
+    }
+  }
+  .rightColumn {
+    float: right;
+  }
+
+}
