@@ -1,4 +1,4 @@
 var env = {
-  "BACKEND_URL": process.env.BACKEND_URL,
+  "BACKEND_URL": "https://hidden-wave-61430.herokuapp.com/",
 };
 export default env;
