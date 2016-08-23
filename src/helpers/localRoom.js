@@ -4,7 +4,7 @@ import $ from 'jquery';
 export function parseRoomNumber(noParse){
   return new Promise(function(resolve, reject) {
     try {
-      $.getJSON('https://ipinfo.io', function (data) {
+      $.getJSON('http://ipinfo.io', function (data) {
         if(noParse) return resolve(data);
         var parsed = {id: data.ip.match(/^\d+\.\d+\.\d+/)[0].replace(/\./g,"")};
         resolve(parsed);
