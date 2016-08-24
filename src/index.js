@@ -41,4 +41,9 @@ parseRoomNumber()
       if(activePlayer) window.location.href = "/#/browse";
     }
     startApp();
-  });
+  })
+  .catch(err => {
+    ReactDOM.render(
+      <div><h1>Allow insecure content</h1><div>Please allow insecure content so we can request your IP over http. This is so I don't pay 10$ a month :)</div></div>
+    )
+  })

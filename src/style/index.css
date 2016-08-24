@@ -61,7 +61,9 @@ body {
 .sc-gameRoom .roster {
   padding: 16px;
   display: -webkit-flex;
-  display: flex; }
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap; }
 .sc-gameRoom .titleLeft, .sc-gameRoom .titleRight {
   display: inline-block;
   margin-left: 0;
@@ -74,7 +76,7 @@ body {
     float: right; }
 .sc-gameRoom .playerChip {
   display: inline-block !important;
-  margin: 0 8px; }
+  margin: 2px !important; }
 
 .gameScrim {
   position: fixed;

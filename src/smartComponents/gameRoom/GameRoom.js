@@ -107,7 +107,7 @@ class GameRoom extends React.Component {
         this.state.room.players.map((player, i) => {
           var imAdmin = player._id === this.state.room.admin._id;
           if(imAdmin) return <Chip className="playerChip" style={{margin: "0 8px"}} key={i} backgroundColor={blue300}><Avatar size={32} backgroundColor={indigo900} color={blue300}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
-          return <Chip key={i}><Avatar size={32} backgroundColor={blueGrey200}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
+          return <Chip className="playerChip" key={i}><Avatar size={32} backgroundColor={blueGrey200}>{player.name.slice(0,1)}</Avatar>{player.name}</Chip>;
         })}
       </div>
       <br/>

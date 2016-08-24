@@ -3,6 +3,8 @@ import prod from './production';
 
 var env = dev;
 
-if(process.env === 'production') env = prod;
+if(process.env.NODE_ENV === 'production') env = prod;
+
+console.log("THE ENV", env);
 
 export default env;
