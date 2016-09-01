@@ -2,4 +2,4 @@
 
 THE NEXT THING
 - test that player will automatically go to new room
-- start waiting room ''
+- start waiting room 

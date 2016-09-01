@@ -42,16 +42,15 @@ class GameRoom extends React.Component {
       })
     });
     socket.on("remove-player", idToRemove => {
-      console.log("triggened", idToRemove, this.state.room);
       var newRoomState = this.state.room;
-      console.log(newRoomState);
       newRoomState.players = newRoomState.players.filter(player => player._id !== idToRemove);
       this.setState({room: newRoomState});
     });
     socket.on("start-game", info => {
       console.log("start-game info ", info );
       controller.startGame(info, this.state.room.players.length);
-    })
+    });
+    socket.on("update-state", roomObj => this.setState({room: roomObj}));
 
     /// get the right room
     var self = this;
@@ -81,12 +80,6 @@ class GameRoom extends React.Component {
     }
   }
 
-  componentWillUpdate() {
-
-    var socket = window.socket;
-    console.log("this?? ", this.state);
-    console.log("setting room ", this.state.room._id);
-  }
   isAdmin = () => getMe("_id") === (this.state.room.admin||{})._id;
 
   render() {
