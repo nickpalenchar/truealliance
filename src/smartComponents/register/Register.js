@@ -58,6 +58,9 @@ class Register extends React.Component {
       })}));
   };
   handleRegister = () => {
+
+    this.setState({page: "loading"})
+
     let thePlayer;
     return parseRoomNumber()
       .then(res => controller.registerPlayer(this.state.name, res.id))
