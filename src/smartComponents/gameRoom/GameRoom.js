@@ -10,6 +10,7 @@ import playerChip from './gameRoom.inlineStyles';
 import Settings from 'material-ui/svg-icons/action/settings';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
+import GameInfo from '../../dumbComponents/gameInfo/GameInfo';
 import env from '../../env';
 var BACKEND_URL = env.BACKEND_URL;
 
@@ -26,7 +27,7 @@ import * as controller from './gameRoom.controller';
 class GameRoom extends React.Component {
   constructor(props){
     super(props);
-    this.state = {room: "", errorMessage: null}
+    this.state = {room: "", errorMessage: null, message: []}
   }
 
   componentWillMount() {
@@ -48,7 +49,13 @@ class GameRoom extends React.Component {
     });
     socket.on("start-game", info => {
       console.log("start-game info ", info );
-      controller.startGame(info, this.state.room.players.length);
+      let humanInfo = controller.startGame(info, this.state.room.players.length);
+      setTimeout(() => {
+          console.log("setting ", info.message);
+          this.setState({message: humanInfo.message});
+          console.log("STATE ", this.state);
+        }
+        ,3000);
     });
     socket.on("update-state", roomObj => this.setState({room: roomObj}));
 
@@ -135,10 +142,17 @@ class GameRoom extends React.Component {
       </CardActions>
     </Card>;
 
+    var nonActiveView = (
+      <div>
+        {this.state.errorMessage && errorView}
+        {this.state.noRoom && noRoom}
+        {!this.state.errorMessage && !this.state.noRoom && <div>{ this.state.room && requireMatchingId2(this.state.room.id, this.state.room._id) ? roomView : loadingView}</div>}
+      </div>
+    );
+    var activeView = <GameInfo message={this.state.message}/>;
+
     return <div className="sc-gameRoom">
-      {this.state.errorMessage && errorView}
-      {this.state.noRoom && noRoom}
-      {!this.state.errorMessage && !this.state.noRoom && <div>{ this.state.room && requireMatchingId2(this.state.room.id, this.state.room._id) ? roomView : loadingView}</div>}
+      {this.state.message.length ? activeView : nonActiveView }
     </div>
   }
 }

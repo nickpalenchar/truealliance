@@ -43,8 +43,9 @@ export function startGame(info) {
   ReactDOM.render(<div className="gameScrim">
     <div className="message">
       { humanInfo.message.map((message, i) => <div key={i} className="messageItem">{message}</div>) }
+      <div className="messageItem button"><MuiThemeProvider><RaisedButton secondary={true} label="hide this" onClick={hideInfo}/></MuiThemeProvider>
+      </div>
     </div>
-    <MuiThemeProvider><RaisedButton secondary={true} label="hide this"/></MuiThemeProvider>
   </div>, document.getElementById('overlay'));
   setTimeout(function(){$('.gameScrim').addClass('opened')},10);
 
@@ -52,5 +53,11 @@ export function startGame(info) {
   var messageInterval = setInterval(function(){
     $('.messageItem:nth-child('+int+')').addClass('opened');
     int++;
-  },2500)
+    if(int > 10) clearTimeout(messageInterval);
+  },2500);
+  return humanInfo;
+}
+
+function hideInfo() {
+  $('.gameScrim').fadeOut(2000);
 }

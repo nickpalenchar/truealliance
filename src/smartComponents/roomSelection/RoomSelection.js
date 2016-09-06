@@ -48,7 +48,8 @@ class RoomSelection extends React.Component {
         <Card key={i}>
           <CardTitle title={room.name} subtitle={"By " + (room.admin||{name: "nobody"}).name + " | " + room.players.length + " players"}/>
           <CardActions>
-            <RaisedButton primary={true} label="Join" onClick={() => joinRoom(this.state.me._id,room._id,true)}/>
+            <RaisedButton primary={true} disabled={room.players.length === room.options.maxPlayers}
+                          label={room.players.length === room.options.maxPlayers ? "Room Full" : "Join"} onClick={() => joinRoom(this.state.me._id,room._id,true)}/>
           </CardActions>
         </Card>)
       )}</div>,
