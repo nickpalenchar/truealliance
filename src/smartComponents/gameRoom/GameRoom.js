@@ -68,6 +68,7 @@ class GameRoom extends React.Component {
       delete window._activeRoom;
     }
     else {
+      console.log("ELSE TRIGGERED")
       /// long polling from param roomId
       return controller.getRoomDocumentById(this.props.params.roomId)
         .then(room => {
@@ -77,7 +78,9 @@ class GameRoom extends React.Component {
             console.log("updating players with", room.players);
             socket.emit('update-players', this.props.params.roomId, room.players);
           }
-
+          console.log("ROOM", room);
+          console.log(controller.continueGame(room.info));
+          if(room.active) self.setState({ message: controller.continueGame(room.info).message });
           return self.setState({room: room});
         })
         .catch(function(err){

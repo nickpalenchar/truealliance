@@ -55,9 +55,15 @@ export function startGame(info) {
     int++;
     if(int > 10) clearTimeout(messageInterval);
   },2500);
+
   return humanInfo;
 }
 
 function hideInfo() {
   $('.gameScrim').fadeOut(2000);
+}
+
+export function continueGame(info) {
+  var character = _.find(info.characters, {_id: getMe("_id") });
+  return getInfo(info, character);
 }
