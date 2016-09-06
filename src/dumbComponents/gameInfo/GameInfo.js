@@ -15,7 +15,7 @@ class GameInfo extends React.Component {
                    showExpandableButton={true}
         />
         <CardText expandable={true}>
-          { message.map(line => <div>{line}</div>) }
+          { message.map((line, k) => <div key={k}>{line}</div>) }
         </CardText>
       </Card>
     )
