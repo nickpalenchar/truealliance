@@ -32,7 +32,8 @@ class GameRoom extends React.Component {
 
   componentWillMount() {
     //// set socket and listenersss.
-    if(!window.socket) window.socket = io(BACKEND_URL); var socket = window.socket;
+    if(!window.socket) window.socket = io(BACKEND_URL);
+    var socket = window.socket;
     socket.emit('join-room', this.props.params.roomId);
     socket.on("test", (arg)=>{
       console.info("test recieved", arg);
