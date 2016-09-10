@@ -64,6 +64,7 @@ function hideInfo() {
 }
 
 export function continueGame(info) {
+  if(!info) return console.warn("[continueGame] no param `info` passed. Refusing to execute")
   var character = _.find(info.characters, {_id: getMe("_id") });
   return getInfo(info, character);
 }

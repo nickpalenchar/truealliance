@@ -1,4 +1,4 @@
 ## Discover your true alliance
 
 THE NEXT THING
-- create "create room" button
+- socket to update remivig a player in the "ROOM_SELECTION" room
