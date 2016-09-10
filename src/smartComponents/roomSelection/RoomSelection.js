@@ -5,7 +5,7 @@ import Loading from '../../dumbComponents/loading/Loading';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import { parseRoomNumber } from '../../helpers/localRoom';
-import { joinRoom } from '../../helpers/joinRoom';
+import { joinRoom, createRoom } from '../../helpers/joinRoom';
 
 import env from '../../env';
 var BACKEND_URL = env.BACKEND_URL;
@@ -43,13 +43,32 @@ class RoomSelection extends React.Component {
     }
   }
   componentDidMount() {
-    var roomSocket = io(BACKEND_URL);
-    roomSocket.on('update-room', function(newRoomObj){
+    this.roomSocket = io(BACKEND_URL);
+    this.roomSocket.emit('join-room', 'ROOM_SELECTION');
+    this.roomSocket.on('update-room', (newRoomObj) => {
       console.log("[socket:update-room] triggered newRoomObj = ", newRoomObj);
       var tempRooms = [];
       for(var i = 0; i < this.state.rooms.length; i++){
-        console.log("triggering with")
+        var selectRoom = this.state.rooms[i];
+        if(selectRoom._id === newRoomObj._id) tempRooms.push(newRoomObj);
+        else tempRooms.push(selectRoom);
       }
+      this.setState({rooms: tempRooms});
+    });
+    this.roomSocket.on('new-room', (room) => {
+      console.log("NEW SOCKET ROOM");
+      var updatedRooms = this.state.rooms.map(n => n);
+      updatedRooms.push(room);
+      this.setState({rooms: updatedRooms});
+    });
+    this.roomSocket.on('update-players', (roomId, players) => {
+      var tempRooms = [];
+      for (var i = 0; i < this.state.rooms.length; i++) {
+        var selectRoom = this.state.rooms[i];
+        if(selectRoom._id === roomId) selectRoom.players = players;
+        tempRooms.push(selectRoom);
+      }
+      this.setState({rooms: tempRooms});
     })
   }
 
@@ -68,7 +87,21 @@ class RoomSelection extends React.Component {
               </CardActions>
             </Card>)
         }
-      )}</div>,
+      )}
+      <RaisedButton
+        label="New Room"
+        onClick={() => {
+          createRoom(this.state.me.id, this.state.me)
+            .then(room => {
+              //SOCKET PART
+              console.log("emit???", this.roomSocket);
+              this.roomSocket.emit('new-room', room);
+              return
+              joinRoom(this.state.me._id, room._id, false, true);
+            })
+        }}
+      />
+      </div>,
     };
 
     return <div className="sc-roomSelection">{pages[this.state.page]}</div>
