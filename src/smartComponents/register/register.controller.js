@@ -20,6 +20,7 @@ export function getLocalUsers() {
     .then(function (res) {
       return $.get(BACKEND_URL + '/api/players/local/' + res.id)
     })
+    .catch(error => { throw error })
     .then(function(players){
       console.log("players: ", players);
       return players;

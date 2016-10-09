@@ -59,7 +59,7 @@ class Register extends React.Component {
   };
   handleRegister = () => {
 
-    this.setState({page: "loading"})
+    this.setState({page: "loading"});
 
     let thePlayer;
     return parseRoomNumber()
@@ -76,7 +76,12 @@ class Register extends React.Component {
           window._localRooms = rooms;
           window.location.href = "/#/browse"
         }
-        // TODO room selection if a room exists.
+      })
+      .catch(error => {
+        console.log("WHATS THE ERRER?", error);
+        if(error.status === 400) return this.getLocalPlayers()
+          .then(() => this.setState({page: "name", error: "Someone just took that name. They're probably evil.", name: ""}));
+        else this.setState({page: "name", error: "UNKNOWN ERROR! We don't know who is evil. Try again or try starting over."});
       })
   };
 
