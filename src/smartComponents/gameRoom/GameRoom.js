@@ -12,7 +12,8 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import GameInfo from '../../dumbComponents/gameInfo/GameInfo';
 import env from '../../env';
-var BACKEND_URL = env.BACKEND_URL;
+var BACKEND_URL = env.BACKEND_URL,
+    DEV_CHEAT = env.DEV_CHEAT;
 
 import LeaveRoom from './gameRoom.components';
 
@@ -69,7 +70,6 @@ class GameRoom extends React.Component {
       delete window._activeRoom;
     }
     else {
-      console.log("ELSE TRIGGERED")
       /// long polling from param roomId
       return controller.getRoomDocumentById(this.props.params.roomId)
         .then(room => {
@@ -119,6 +119,7 @@ class GameRoom extends React.Component {
         {this.isAdmin() && <RaisedButton
           label="Play"
           primary={true}
+          disabled={false}
           onClick={()=>socket.emit('start-game', this.props.params.roomId, room.options, room.players)}
         />}
       </CardActions>

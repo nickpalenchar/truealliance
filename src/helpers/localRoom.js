@@ -11,7 +11,7 @@ export function parseRoomNumber(noParse){
     try {
       $.get(BACKEND_URL + '/ip', function(roomNumber){
         console.log("THE ROOM NUMBER", roomNumber);
-        if(roomNumber !== "cc1") return resolve({id: roomNumber});
+        // if(roomNumber !== "cc1") return resolve({id: roomNumber});
         $.getJSON('http://ipinfo.io', function (data) {
           if(noParse) return resolve(data);
           var parsed = {id: data.ip.match(/^\d+\.\d+\.\d+/)[0].replace(/\./g,"")};
