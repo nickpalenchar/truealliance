@@ -6,7 +6,6 @@ import { getMe } from '../../helpers/getMe';
 
 export function clearAllData() {
   if(confirm("Are you sure?")) {
-    debugger;
     var me = getMe();
     if(me) $.post(BACKEND_URL + '/api/players/delete', {name: me.name, code: me.code})
       .then(() => {
