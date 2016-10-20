@@ -33,7 +33,7 @@ export function getInfo(globalInfo, player) {
       }
     }
     if(player.alliance === "evil") {
-      if(!player.character) {
+      if(!player.character || player.character === "specialCharacters") {
         info = allChars.filter(p => p.alliance === "evil" && p.character !== "oberon" && p.name !== player.name).map(p => p.name);
         return new Info(["You are a minoin of Mordred. You are evil, along with:",
           listWithGrammar(info),
@@ -59,6 +59,8 @@ export function getInfo(globalInfo, player) {
           listWithGrammar(info), "Earn the trust of the clan and fail their quests."])
       }
     }
+    console.error("[roles.js:getInfo]\n!!!!!!!!!!!!!!\n!!!!!!!!!! WARNING! !!!!!!!!!!!\n!!!!!!!!!!!!!!!!!\n\n " +
+      "Get info function did not get a return. Paramaters were not properly handled.\nParams:\n", arguments);
   }
 
   ////// WITHOUT SPECIAL CHARACTERS ///////
@@ -76,4 +78,4 @@ export function getInfo(globalInfo, player) {
       ], info)
     }
   }
-};
+}
