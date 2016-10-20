@@ -16,6 +16,7 @@ var BACKEND_URL = env.BACKEND_URL,
     DEV_CHEAT = env.DEV_CHEAT;
 
 import LeaveRoom from './gameRoom.components';
+import * as ctrl from '../navBar/navbar.controller';
 
 import { requireMatchingId2 } from '../../thunks/requireMatchingId';
 import { getMe } from '../../helpers/getMe';
@@ -96,6 +97,7 @@ class GameRoom extends React.Component {
   render() {
     //// SOCKET ////
     var room = this.state.room || {};
+    // var playLabel = this.state.room.players.length < 5 ? "Need at least " + this.state.room.players.length - 5 : "Play";
 
     var roomView = (<Card>
       <CardTitle title={<div>
@@ -117,9 +119,9 @@ class GameRoom extends React.Component {
       <br/>
       <CardActions>
         {this.isAdmin() && <RaisedButton
-          label="Play"
+          label={"Play"}
           primary={true}
-          disabled={false}
+          disabled={this.state.room.players.length < 5}
           onClick={()=>socket.emit('start-game', this.props.params.roomId, room.options, room.players)}
         />}
       </CardActions>
@@ -143,7 +145,7 @@ class GameRoom extends React.Component {
       <CardActions>
         <RaisedButton primary={true} label="Create Room"/>
         <FlatButton label={"Join Another"} onClick={()=>window.location.href="/#/browse"}/>
-        <FlatButton label={"Start Over"}/>
+        <FlatButton label={"Start Over"} onClick={ctrl.clearAllData}/>
       </CardActions>
     </Card>;
 

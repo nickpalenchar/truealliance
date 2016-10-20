@@ -34,15 +34,18 @@ export function leaveRoom(roomId, roomDocId) {
 }
 
 export function startGame(info) {
-  var character = _.find(info.characters, {_id: getMe("_id") });
-  var humanInfo = getInfo(info, character);
-  console.log("INFO", humanInfo);
-
-  console.log("the character", character);
-  console.log("started game with info ", info);
+  try {
+    var character = _.find(info.characters, {_id: getMe("_id") });
+    var humanInfo = getInfo(info, character);
+    console.log("INFO", humanInfo);
+    console.log("the character", character);
+    console.log("started game with info ", info);
+  } catch (e) {
+    alert("Something went wrong. Please refresh the page to view your alliance");
+  }
   ReactDOM.render(<div className="gameScrim">
     <div className="message">
-      { humanInfo.message.map((message, i) => <div key={i} className="messageItem">{message}</div>) }
+      { humanInfo.message.map((message, i) => <div key={i} className="messageItem">{message === " & undefined" ? "Hmm... you can't see anyone. It's just you and Oberon" : message}</div>) }
       <div className="messageItem button"><MuiThemeProvider><RaisedButton secondary={true} label="hide this" onClick={hideInfo}/></MuiThemeProvider>
       </div>
     </div>
@@ -64,7 +67,8 @@ function hideInfo() {
 }
 
 export function continueGame(info) {
-  if(!info) return console.warn("[continueGame] no param `info` passed. Refusing to execute")
+  if(!info) return console.warn("[continueGame] no param `info` passed. Refusing to execute");
+  console.log("[gameRoom.ctrl continueGame ", info);
   var character = _.find(info.characters, {_id: getMe("_id") });
   return getInfo(info, character);
 }

@@ -15,6 +15,7 @@ export function parseRoomNumber(noParse){
         $.getJSON('http://ipinfo.io', function (data) {
           if(noParse) return resolve(data);
           var parsed = {id: data.ip.match(/^\d+\.\d+\.\d+/)[0].replace(/\./g,"")};
+          console.log("PARSED ", parsed);
           resolve(parsed);
         })
       });
