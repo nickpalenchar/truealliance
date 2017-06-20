@@ -19,7 +19,8 @@ class Register extends React.Component {
     this.state = {
       name: "",
       page: "name",
-      localPlayerNames: [],
+      localPlayerNames: [], //@TODO: DEPRECATED: delete 30 days after morgana
+      guests: []
       error: null,
     }
   }
@@ -29,7 +30,8 @@ class Register extends React.Component {
         if(localStorage.getItem(res.id)){
           return window.location.href = "/#/browse"
         }
-        return this.getLocalPlayers();
+        return controller.getGuests()
+          .then(guests => this.setState({guests}));
       })
   }
 
@@ -38,7 +40,8 @@ class Register extends React.Component {
     this.setState({
       name: newName,
     });
-    if (this.state.localPlayerNames.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."});
+    if (this.state.guests.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."});
+    if (this.state.localPlayerNames.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."}); //@TODO: delete after morgana!
     else if (this.state.error) this.setState({error: null});
   };
 
@@ -51,12 +54,15 @@ class Register extends React.Component {
 
   getAvailableRooms = () => controller.getAvailableRooms();
 
+  //@TODO DELETE THIS 30 DAYS AFTER MORGANA RELEASE
   getLocalPlayers = () => {
+    console.warn("DEPRECATION NOTICE: Use `getGuests` instead")
     return controller.getLocalUsers()
       .then(players => this.setState({localPlayerNames: players.map(function (player) {
         return player.name;
       })}));
   };
+
   handleRegister = () => {
 
     this.setState({page: "loading"});
