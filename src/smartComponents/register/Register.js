@@ -20,7 +20,7 @@ class Register extends React.Component {
       name: "",
       page: "name",
       localPlayerNames: [], //@TODO: DEPRECATED: delete 30 days after morgana
-      guests: []
+      guests: [],
       error: null,
     }
   }
@@ -30,8 +30,11 @@ class Register extends React.Component {
         if(localStorage.getItem(res.id)){
           return window.location.href = "/#/browse"
         }
-        return controller.getGuests()
-          .then(guests => this.setState({guests}));
+        return controller.getWaitingRoom()
+          .then(waitingRoom => {
+            console.log("THEE ROOM ", waitingRoom);
+            this.setState({guests: waitingRoom.guests})
+          });
       })
   }
 
@@ -56,7 +59,7 @@ class Register extends React.Component {
 
   //@TODO DELETE THIS 30 DAYS AFTER MORGANA RELEASE
   getLocalPlayers = () => {
-    console.warn("DEPRECATION NOTICE: Use `getGuests` instead")
+    console.warn("DEPRECATION NOTICE: Use `getWaitingRoom` instead")
     return controller.getLocalUsers()
       .then(players => this.setState({localPlayerNames: players.map(function (player) {
         return player.name;
