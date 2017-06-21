@@ -17,7 +17,7 @@ export function getAvailableRooms() {
 
 //@TODO: DELETE 30 DAYS AFTER MORGANA RELEASE
 export function getLocalUsers() {
-  console.warn("[getLocalUsers] DEPRECATED: use `controller.getGuests` instead");
+  console.warn("[getLocalUsers] DEPRECATED: use `controller.getWaitingRoom` instead");
   return parseRoomNumber()
     .then(function (res) {
       return $.get(BACKEND_URL + '/api/players/local/' + res.id)
@@ -28,10 +28,10 @@ export function getLocalUsers() {
       return players;
     })
 }
-export function getGuests(){
+export function getWaitingRoom(){
   return parseRoomNumber()
     .then(function(res){
-      return $.get(BACKEND_URL + '/api/rooms/guest/' + res.id)
+      return $.get(BACKEND_URL + '/api/rooms/waiting/' + res.id)
     })
     .then(function(guests){
       return guests;

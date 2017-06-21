@@ -20,7 +20,7 @@ class Register extends React.Component {
       name: "",
       page: "name",
       localPlayerNames: [], //@TODO: DEPRECATED: delete 30 days after morgana
-      guests: []
+      guests: [],
       error: null,
     }
   }
@@ -30,8 +30,11 @@ class Register extends React.Component {
         if(localStorage.getItem(res.id)){
           return window.location.href = "/#/browse"
         }
-        return controller.getGuests()
-          .then(guests => this.setState({guests}));
+        return controller.getWaitingRoom()
+          .then(waitingRoom => {
+            console.log("THEE ROOM ", waitingRoom);
+            this.setState({guests: waitingRoom.guests})
+          });
       })
   }
 
@@ -40,7 +43,7 @@ class Register extends React.Component {
     this.setState({
       name: newName,
     });
-    if (this.state.guests.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."});
+    if (this.state.guests.some(o => o.name === newName)) this.setState({error: "Someone else already has that name."});
     if (this.state.localPlayerNames.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."}); //@TODO: delete after morgana!
     else if (this.state.error) this.setState({error: null});
   };
@@ -56,7 +59,7 @@ class Register extends React.Component {
 
   //@TODO DELETE THIS 30 DAYS AFTER MORGANA RELEASE
   getLocalPlayers = () => {
-    console.warn("DEPRECATION NOTICE: Use `getGuests` instead")
+    console.warn("DEPRECATION NOTICE: Use `getWaitingRoom` instead")
     return controller.getLocalUsers()
       .then(players => this.setState({localPlayerNames: players.map(function (player) {
         return player.name;
@@ -85,8 +88,8 @@ class Register extends React.Component {
       })
       .catch(error => {
         console.log("WHATS THE ERRER?", error);
-        if(error.status === 400) return this.getLocalPlayers()
-          .then(() => this.setState({page: "name", error: "Someone just took that name. They're probably evil.", name: ""}));
+        if(error.status === 400) return controller.getWaitingRoom()
+          .then((wr) => this.setState({page: "name", error: "Someone just took that name. They're probably evil.", name: "", guests: wr.guests}));
         else this.setState({page: "name", error: "UNKNOWN ERROR! We don't know who is evil. Try again or try starting over."});
       })
   };
