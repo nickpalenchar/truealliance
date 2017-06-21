@@ -12,7 +12,6 @@ export function clearAllData() {
       .then((roomNumberObj => {
         if(me) return $.post(BACKEND_URL + '/api/players/remove/guest/'+me.name,{roomId: roomNumberObj.id})
           .then(() => {
-
             window.localStorage.clear();
             window.sessionStorage.clear();
             window.location.href = "/";

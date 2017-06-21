@@ -43,7 +43,7 @@ class Register extends React.Component {
     this.setState({
       name: newName,
     });
-    if (this.state.guests.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."});
+    if (this.state.guests.some(o => o.name === newName)) this.setState({error: "Someone else already has that name."});
     if (this.state.localPlayerNames.indexOf(newName) !== -1) this.setState({error: "Someone else already has that name."}); //@TODO: delete after morgana!
     else if (this.state.error) this.setState({error: null});
   };
@@ -88,8 +88,8 @@ class Register extends React.Component {
       })
       .catch(error => {
         console.log("WHATS THE ERRER?", error);
-        if(error.status === 400) return this.getLocalPlayers()
-          .then(() => this.setState({page: "name", error: "Someone just took that name. They're probably evil.", name: ""}));
+        if(error.status === 400) return controller.getWaitingRoom()
+          .then((wr) => this.setState({page: "name", error: "Someone just took that name. They're probably evil.", name: "", guests: wr.guests}));
         else this.setState({page: "name", error: "UNKNOWN ERROR! We don't know who is evil. Try again or try starting over."});
       })
   };
