@@ -29,7 +29,7 @@ import * as controller from './gameRoom.controller';
 class GameRoom extends React.Component {
   constructor(props){
     super(props);
-    this.state = {room: "", errorMessage: null, message: []}
+    this.state = {room: "", errorMessage: null, message: [], alliance: null}
   }
 
   componentWillMount() {
@@ -55,7 +55,7 @@ class GameRoom extends React.Component {
       let humanInfo = controller.startGame(info, this.state.room.players.length);
       setTimeout(() => {
           console.log("setting ", info.message);
-          this.setState({message: humanInfo.message});
+          this.setState({message: humanInfo.message[0], alliance: humanInfo.message[1]});
           console.log("STATE ", this.state);
         }
         ,3000);
@@ -158,7 +158,7 @@ class GameRoom extends React.Component {
         {!this.state.errorMessage && !this.state.noRoom && <div>{ this.state.room && requireMatchingId2(this.state.room.id, this.state.room._id) ? roomView : loadingView}</div>}
       </div>
     );
-    var activeView = <GameInfo message={this.state.message}/>;
+    var activeView = <GameInfo message={this.state.message} alliance={this.state.alliance}/>;
 
     return <div className="sc-gameRoom">
       {this.state.message.length ? activeView : nonActiveView }

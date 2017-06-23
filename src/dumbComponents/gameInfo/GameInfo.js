@@ -5,19 +5,32 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 class GameInfo extends React.Component {
 
   render() {
-    let { message } = this.props;
+    let { message, alliance } = this.props;
 
     return (
-      <Card>
-        <CardTitle title="Your Info"
-                   subtitle="Click the arrow on the right to reveal your knowledge"
-                   actAsExpander={true}
-                   showExpandableButton={true}
-        />
-        <CardText expandable={true}>
-          { message.map((line, k) => <div key={k}>{line}</div>) }
-        </CardText>
-      </Card>
+      <div>
+        <Card>
+          <CardTitle title="Your Info"
+                     subtitle="Click the arrow on the right to reveal your knowledge"
+                     actAsExpander={true}
+                     showExpandableButton={true}
+          />
+          <CardText expandable={true}>
+            { message.map((line, k) => <div key={k}>{line}</div>) }
+          </CardText>
+        </Card>
+        <br/>
+        <Card>
+          <CardTitle title="Your Alliance"
+                     subtitle="Click the arrow on the right to reveal your alliance only (for ladying)"
+                     actAsExpander={true}
+                     showExpandableButton={true}
+          />
+          <CardText expandable={true}>
+            { alliance }
+          </CardText>
+        </Card>
+      </div>
     )
   }
 

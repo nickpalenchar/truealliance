@@ -45,7 +45,7 @@ export function startGame(info) {
   }
   ReactDOM.render(<div className="gameScrim">
     <div className="message">
-      { humanInfo.message.map((message, i) => <div key={i} className="messageItem">{message === " & undefined" ? "Hmm... you can't see anyone. It's just you and Oberon" : message}</div>) }
+      { humanInfo.message[0].map((message, i) => <div key={i} className="messageItem">{message === " & undefined" ? "Hmm... you can't see anyone. It's just you and Oberon" : message}</div>) }
       <div className="messageItem button"><MuiThemeProvider><RaisedButton secondary={true} label="hide this" onClick={hideInfo}/></MuiThemeProvider>
       </div>
     </div>
