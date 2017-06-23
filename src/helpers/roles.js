@@ -33,6 +33,7 @@ export function getInfo(globalInfo, player) {
       }
     }
     if(player.alliance === "evil") {
+      //WARNING! DO NOT PUT THE TEXT "good" IN THE EVILS INFOS. I use a hack to display alliance by looking for that keyword
       if(!player.character || player.character === "specialCharacters") {
         info = allChars.filter(p => p.alliance === "evil" && p.character !== "oberon" && p.name !== player.name).map(p => p.name);
         return new Info([["You are a minoin of Mordred. You are evil, along with:",
@@ -66,16 +67,16 @@ export function getInfo(globalInfo, player) {
   ////// WITHOUT SPECIAL CHARACTERS ///////
   else {
     if(player.alliance === "good"){
-      return new Info(["You are the resistance, you are good", "Discover who is undercover as a spy and prevent them from sabotaging your quest"]);
+      return new Info([["You are the resistance, you are good", "Discover who is undercover as a spy and prevent them from sabotaging your quest"],"good"]);
     }
     if(player.alliance === "evil"){
       info = allChars.filter(p => p.alliance === "evil" && p.name !== player.name)
         .map(p => p.name);
-      return new Info(["You are an Imperial Spy. You are evil. Your fellow " +
+      return new Info([["You are an Imperial Spy. You are evil. Your fellow " +
       (info.length === 1 ? "spy is:" : "spies are:"),
         listWithGrammar(info),
         "Earn the trust of the resistance and fail their quests."
-      ], info)
+      ], "evil"], info)
     }
   }
 }

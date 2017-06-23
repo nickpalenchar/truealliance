@@ -34,6 +34,7 @@ class GameRoom extends React.Component {
 
   componentWillMount() {
     //// set socket and listenersss.
+    debugger;
     if(!window.socket) window.socket = io(BACKEND_URL);
     var socket = window.socket;
     socket.emit('join-room', this.props.params.roomId);
@@ -158,7 +159,7 @@ class GameRoom extends React.Component {
         {!this.state.errorMessage && !this.state.noRoom && <div>{ this.state.room && requireMatchingId2(this.state.room.id, this.state.room._id) ? roomView : loadingView}</div>}
       </div>
     );
-    var activeView = <GameInfo message={this.state.message} alliance={this.state.alliance}/>;
+    var activeView = <GameInfo message={this.state.message[0]} alliance={this.state.message[1]}/>;
 
     return <div className="sc-gameRoom">
       {this.state.message.length ? activeView : nonActiveView }
