@@ -5,7 +5,10 @@ const BACKEND_URL = env.BACKEND_URL;
 import { getMe } from '../../helpers/getMe';
 import { parseRoomNumber } from '../../helpers/localRoom'
 
-export function clearAllData() {
+export function clearAllData(force) {
+  if(/gameRoom/.test(window.location.hash && !force)){
+    return alert("Please leave the room first");
+  }
   if(confirm("Are you sure?")) {
     var me = getMe();
     parseRoomNumber()
@@ -24,4 +27,10 @@ export function clearAllData() {
         }
       }))
   }
+}
+
+export function clearFrontendData(){
+  window.localStorage.clear();
+  window.sessionStorage.clear();
+  window.location.href = "/";
 }

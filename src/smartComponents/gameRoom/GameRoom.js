@@ -122,7 +122,9 @@ class GameRoom extends React.Component {
           label={"Play"}
           primary={true}
           disabled={this.state.room.players.length < 5}
-          onClick={()=>socket.emit('start-game', this.props.params.roomId, room.options, room.players)}
+          onClick={()=>{
+            socket.emit('start-game', this.props.params.roomId, room.options, room.players, this.state.room.id);
+          }}
         />}
       </CardActions>
     </Card>);
@@ -145,7 +147,7 @@ class GameRoom extends React.Component {
       <CardActions>
         <RaisedButton primary={true} label="Create Room"/>
         <FlatButton label={"Join Another"} onClick={()=>window.location.href="/#/browse"}/>
-        <FlatButton label={"Start Over"} onClick={ctrl.clearAllData}/>
+        <FlatButton label={"Start Over"} onClick={() => ctrl.clearFrontendData()}/>
       </CardActions>
     </Card>;
 
